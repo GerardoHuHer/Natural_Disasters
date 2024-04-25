@@ -62,6 +62,7 @@ const CountryInfo = () => {
               <tr>
                 <th>Año</th>
                 <th>Desastre Natural</th>
+                <th>Defunciones</th>
               </tr>
             </thead>
             <tbody>
@@ -69,6 +70,7 @@ const CountryInfo = () => {
                 <tr key={index}>
                   <td>{item.year}</td>
                   <td>{item.natural_disaster}</td>
+                  <td>{item.defunciones}</td>
                 </tr>
               ))}
             </tbody>

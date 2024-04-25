@@ -21,21 +21,40 @@ const Deads = () => {
   };
 
   const fetchData = (year) => {
-    fetch(`http://localhost:3001/dead/year?year=${year}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error al obtener los datos');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setData(data);
-        setError(null);
-      })
-      .catch(error => {
-        setError('Error al obtener los datos');
-        console.error('Error:', error);
-      });
+    if (year === 'ALL') {
+      // Si se selecciona 'ALL', mostrar una tabla diferente
+      fetch(`http://localhost:3001/dead/all`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al obtener los datos');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setData(data);
+          setError(null);
+        })
+        .catch(error => {
+          setError('Error al obtener los datos');
+          console.error('Error:', error);
+        });
+    } else {
+      fetch(`http://localhost:3001/dead/year?year=${year}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al obtener los datos');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setData(data);
+          setError(null);
+        })
+        .catch(error => {
+          setError('Error al obtener los datos');
+          console.error('Error:', error);
+        });
+    }
   };
 
   const updatePieChart = () => {
@@ -77,6 +96,14 @@ const Deads = () => {
           responsive: true,
           maintainAspectRatio: true,
           plugins: {
+            title: {
+              display: true,
+              text: 'Gráfica de defunciones', // Título de la gráfica
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
+            },
             legend: {
               display: false, // Oculta la leyenda
             },
@@ -99,11 +126,14 @@ const Deads = () => {
             {year}
           </div>
         ))}
+        <div className={`tab ${selectedYear === 'ALL' ? 'selected' : ''}`} onClick={() => handleChange('ALL')}>
+          ALL
+        </div>
       </div>
 
       <div className="content">
         <div className="table-container">
-          {data && (
+          {data && selectedYear !== 'ALL' && (
             <div>
               <h2>Datos para el año {selectedYear}:</h2>
               <table className="styled-table">
@@ -116,6 +146,27 @@ const Deads = () => {
                 <tbody>
                   {data.map((item, index) => (
                     <tr key={index}>
+                      <td>{item.name}</td>
+                      <td>{item.Total}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {data && selectedYear === 'ALL' && (
+            <div>
+              <h2>Todas las defunciones:</h2>
+              <table className="styled-table">
+                <thead>
+                  <tr>                    
+                    <th>País</th>
+                    <th>Defunciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((item, index) => (
+                    <tr key={index}>                    
                       <td>{item.name}</td>
                       <td>{item.Total}</td>
                     </tr>

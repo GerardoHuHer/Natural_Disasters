@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .select-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .select-wrapper {
+    margin: 0 10px;
+  }
+  
+  table {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .chart-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .chart-wrapper {
+    margin: 0 10px;
+  }
+  

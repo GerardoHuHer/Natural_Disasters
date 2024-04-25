@@ -31,46 +31,21 @@ db.connect((err) => {
   }
 });
 
-
-app.get("/api/query", (req, res) => {
-  const { year } = req.query;
-  const query = `
-    SELECT disasterType_id, magnitude_value, start_date 
-    FROM disasters 
-    WHERE YEAR(start_date) = ${year};`;
-  db.query(query, (err, results) => {
-    if (err) {
-      console.error("Error al obtener datos:", err);
-      res.status(500).json({ error: "Error al obtener datos" });
-    } else {
-      res.json(results); // Envía los datos como JSON
-    } 
-  });
-});
-
-app.get("/api/hello", (req, res) => {
-  res.json({ message: "Hello from the backend!" });
-});
-
-app.get("/api/borrames", (req, res) => {
-  const query = `
-    SELECT disaster_locations.id, disaster_locations.location, associated_types.associated_type 
-    FROM disaster_locations 
-    INNER JOIN associated_types ON disaster_locations.disaster_id = associated_types.disaster_id;
-  `;
-  db.query(query, (err, results) => {
-    if (err) {
-      console.error("Error al obtener datos:", err);
-      res.status(500).json({ error: "Error al obtener datos" });
-    } else {
-      res.json(results); // Envía los datos como JSON
-    } 
-  });
-});
-
 app.get("/dead/year/", (req, res)=>{
   const { year } = req.query;
-  const query = `SELECT countries.name, YEAR(disasters.start_date) AS Anio ,SUM(disasters.people_dead) AS Total FROM disasters, countries	WHERE disasters.country_id=countries.id AND YEAR(disasters.start_date)>=${year} GROUP BY countries.name, Anio ORDER BY Anio,Total DESC LIMIT 50; `
+  const query = `SELECT countries.name, YEAR(disasters.start_date) AS Anio ,SUM(disasters.people_dead) AS Total FROM disasters, countries	WHERE disasters.country_id=countries.id AND YEAR(disasters.start_date)>=${year} GROUP BY countries.name, Anio ORDER BY Anio,Total DESC LIMIT 10; `
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error al obtener datos:", err);
+      res.status(500).json({ error: "Error al obtener datos" });
+    } else {
+      res.json(results); // Envía los datos como JSON
+    } 
+  });
+})
+app.get("/dead/all", (req, res)=>{
+  const query = `SELECT countries.name, SUM(disasters.people_dead) AS Total FROM disasters, countries	WHERE disasters.country_id=countries.id
+  GROUP BY countries.name ORDER BY Total DESC LIMIT 10; `
   db.query(query, (err, results) => {
     if (err) {
       console.error("Error al obtener datos:", err);
@@ -92,3 +67,52 @@ app.get("/paises", (req, res) =>{
     }
   })
 })
+
+app.get("/principal/modificaciones", (req, res) => {
+  const { year, country } = req.query;
+  const query = `SELECT YEAR(disasters.start_date) AS Anio, 
+                        countries.name AS Country, 
+                        disaster_types.group AS Disaster_Type, 
+                        disaster_types.type AS Tipo, 
+                        SUM(disasters.people_dead) AS People_Dead 
+                 FROM disasters, countries, disaster_types 
+                 WHERE disasters.country_id = countries.id 
+                       AND disasters.disasterType_id = disaster_types.id 
+                       AND countries.name = ? 
+                       AND YEAR(disasters.start_date) = ? 
+                 GROUP BY Anio, Country, Disaster_Type, Tipo 
+                 ORDER BY Anio, People_Dead DESC;`;
+
+  db.query(query, [country, year], (err, results) => {
+    if (err) {
+      console.log("Error al obtener los datos: ", err);
+      res.status(500).json({ error: "Error al obtener los datos" });
+    } else {
+      res.json(results);
+    }
+  });
+});
+app.get("/principal", (req, res) => {
+  const {country, year } = req.query;
+  const query = `SELECT YEAR(disasters.start_date) AS Anio,(countries.name) AS Country, (disaster_types.group) AS Disaster_Type, (disaster_types.type) AS Tipo, SUM(disaster_types.type) AS No_Disaster_Type,SUM(disasters.people_dead) AS People_Dead
+  FROM disasters, countries, disaster_types
+  WHERE
+    disasters.country_id=countries.id
+  AND
+      disasters.disasterType_id=disaster_types.id
+  AND
+    countries.name=?
+  AND
+    YEAR(disasters.start_date)=?
+  GROUP BY Anio,Country, Disaster_Type, Tipo
+  ORDER BY Anio,No_Disaster_Type,People_Dead DESC;`;
+
+  db.query(query, [country, year], (err, results) => {
+    if (err) {
+      console.log("Error al obtener los datos: ", err);
+      res.status(500).json({ error: "Error al obtener los datos" });
+    } else {
+      res.json(results);
+    }
+  });
+});
