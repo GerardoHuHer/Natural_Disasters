@@ -116,3 +116,26 @@ app.get("/principal", (req, res) => {
     }
   });
 });
+
+app.get("/principal/agno", (req, res) => {
+  const { year } = req.query;
+  const query = `SELECT YEAR(disasters.start_date) AS Anio,(countries.name) AS Country, (disaster_types.group) AS Disaster_Type, (disaster_types.type) AS Tipo, SUM(disaster_types.type) AS No_Disaster_Type,SUM(disasters.people_dead) AS People_Dead
+  FROM disasters, countries, disaster_types
+  WHERE
+    disasters.country_id=countries.id
+  AND
+      disasters.disasterType_id=disaster_types.id
+  AND
+    YEAR(disasters.start_date)=?
+  GROUP BY Anio,Country, Disaster_Type, Tipo
+  ORDER BY Anio,No_Disaster_Type,People_Dead DESC;`;
+
+  db.query(query, [country, year], (err, results) => {
+    if (err) {
+      console.log("Error al obtener los datos: ", err);
+      res.status(500).json({ error: "Error al obtener los datos" });
+    } else {
+      res.json(results);
+    }
+  });
+});
