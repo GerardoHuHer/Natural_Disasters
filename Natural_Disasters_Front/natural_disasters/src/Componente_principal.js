@@ -10,6 +10,7 @@ const DisasterStatsComponent = () => {
   const years = Array.from({ length: 2022 - 1990 + 1 }, (_, index) => 1990 + index);
   const [pieChart, setPieChart] = useState(null);
   const [barChart, setBarChart] = useState(null);
+  const [showTable, setShowTable] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:3001/paises')
@@ -72,6 +73,7 @@ const DisasterStatsComponent = () => {
       data: {
         labels: pieChartLabels,
         datasets: [{
+          label: 'Disasters by Type',
           data: pieChartValues,
           backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8E5EA2', '#FF6600'],
         }]
@@ -103,7 +105,17 @@ const DisasterStatsComponent = () => {
       options: {
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Number of Deaths'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Disaster Type'
+            }
           }
         }
       }
@@ -130,6 +142,10 @@ const DisasterStatsComponent = () => {
     fetchData();
   };
 
+  const handleToggleTable = () => {
+    setShowTable(!showTable);
+  };
+
   return (
     <div className="container">
       <div className="select-container">
@@ -153,42 +169,45 @@ const DisasterStatsComponent = () => {
         </div>
         <button onClick={handleFetchData}>Fetch Data</button>
       </div>
-      {data.length > 0 && (
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Country</th>
-              <th>Disaster Type</th>
-              <th>Type</th>
-              <th>Total Desastres</th>
-              <th>People Dead</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
-                <td>{item.Anio}</td>
-                <td>{item.Country}</td>
-                <td>{item.Disaster_Type}</td>
-                <td>{item.Tipo}</td>
-                <td>{item.No_Disaster_Type}</td>
-                <td>{item.People_Dead}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
       <div className="charts-container">
-        {data.length > 0 && (
-          <>
-            <div className="chart">
-              <canvas id="pieChart"></canvas>
-            </div>
-            <div className="chart">
-              <canvas id="barChart"></canvas>
-            </div>
-          </>
+        <div className="chart">
+          <h3>Pie Chart</h3>
+          <canvas id="pieChart"></canvas>
+        </div>
+        <div className="chart">
+          <h3>Bar Chart</h3>
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+      <div className="table-container">
+        <button onClick={handleToggleTable}>
+          {showTable ? 'Hide Table' : 'Show Table'}
+        </button>
+        {showTable && data.length > 0 && (
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Country</th>
+                <th>Disaster Type</th>
+                <th>Type</th>
+                <th>Total Desastres</th>
+                <th>People Dead</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.Anio}</td>
+                  <td>{item.Country}</td>
+                  <td>{item.Disaster_Type}</td>
+                  <td>{item.Tipo}</td>
+                  <td>{item.No_Disaster_Type}</td>
+                  <td>{item.People_Dead}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
     </div>
