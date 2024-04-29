@@ -11,6 +11,7 @@ const DisasterStatsComponent = () => {
   const [pieChart, setPieChart] = useState(null);
   const [barChart, setBarChart] = useState(null);
   const [showTable, setShowTable] = useState(false);
+  const [showCharts, setShowCharts] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:3001/paises')
@@ -26,6 +27,7 @@ const DisasterStatsComponent = () => {
   useEffect(() => {
     if (data.length > 0) {
       createCharts();
+      setShowCharts(true);
     }
   }, [data]);
 
@@ -148,6 +150,8 @@ const DisasterStatsComponent = () => {
 
   return (
     <div className="container">
+      <h1 className="title">Desastres Naturales</h1>
+      <div className='instrucciones'>Seleccione el año y el país: </div>
       <div className="select-container">
         <div className="select-wrapper">
           <label htmlFor="year">Select Year:</label>
@@ -169,6 +173,7 @@ const DisasterStatsComponent = () => {
         </div>
         <button onClick={handleFetchData}>Fetch Data</button>
       </div>
+
       <div className="charts-container">
         <div className="chart">
           <h3>Pie Chart</h3>
@@ -179,11 +184,12 @@ const DisasterStatsComponent = () => {
           <canvas id="barChart"></canvas>
         </div>
       </div>
+
       <div className="table-container">
         <button onClick={handleToggleTable}>
           {showTable ? 'Hide Table' : 'Show Table'}
         </button>
-        {showTable && data.length > 0 && (
+        {showTable && data.length > 0 && ( 
           <table className="data-table">
             <thead>
               <tr>

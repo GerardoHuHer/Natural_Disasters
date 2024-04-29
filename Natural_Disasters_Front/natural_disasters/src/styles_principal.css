@@ -1,3 +1,13 @@
+:root {
+  --azulPrincipal: #019EA5;
+  --blanco: #FFFFFF;
+  --fondoPrincipal: #F9F9F9;
+}
+
+body {
+  background: var(--fondoPrincipal);
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -7,22 +17,28 @@
   .select-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin: 40px;
   }
   
   .select-wrapper {
-    margin: 0 10px;
+    margin-right: 5rem;
   }
   
   table {
     width: 100%;
     margin-bottom: 20px;
+    border-collapse: collapse;
   }
   
   th, td {
     padding: 8px;
     border: 1px solid #ddd;
     text-align: left;
+  }
+
+  thead {
+    background-color: var(--azulPrincipal);
+    color: var(--blanco);
   }
   
   .chart-container {
