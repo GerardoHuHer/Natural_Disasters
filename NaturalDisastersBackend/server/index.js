@@ -139,3 +139,63 @@ app.get("/principal/agno", (req, res) => {
     }
   });
 });
+
+app.get("/disasters", (req, res) =>{
+  const query = "SELECT type FROM `disaster_types`;"
+  db.query(query, (err, results) => {
+    if(err){
+      console.log("Error al obtener los datos: ", err);
+      res.status(500).json({error: "Error al obtener los datos"});
+    } else {
+      res.json(results);
+    }
+  })
+})
+
+app.get("/distasters_per_country", (req, res) => {
+  const { country } = req.query;
+  const query = `SELECT countries.name AS Pais, disaster_types.type, COUNT(disasters.id) AS cantidad_desastres
+  FROM disasters, disaster_types, countries
+  WHERE
+    countries.id = disasters.country_id AND
+      disasters.disasterType_id = disaster_types.id AND
+      countries.name = ?
+  GROUP BY disaster_types.type  
+  ORDER BY cantidad_desastres DESC
+  Limit 10`
+  db.query(query, [country], (err, results) => {
+    if(err){
+      console.log("Error al obtener los datos: ", err);
+      res.status(500).json({error: "Error al obtener los datos"});
+    } else {
+      const formattedData = results.map(item => ({
+        Pais: item.Pais,
+        type: item.type,
+        cantidad_desastres: item.cantidad_desastres
+      }));
+      res.json(formattedData);
+    }
+  })
+})
+
+app.get("/disaster_year", (req, res) => {
+  const {country, disaster } = req.query;
+  const query = `SELECT countries.name AS Pais, disaster_types.type, COUNT(disasters.id) AS cantidad_desastres, YEAR(disasters.start_date) as Anio
+  FROM disasters, disaster_types, countries
+  WHERE
+    countries.id = disasters.country_id AND
+      disasters.disasterType_id = disaster_types.id AND
+      countries.name = ? AND
+      disaster_types.type = ?
+  GROUP BY disaster_types.type, Anio  
+  ORDER BY cantidad_desastres DESC;`;
+
+  db.query(query, [country, disaster], (err, results) => {
+    if (err) {
+      console.log("Error al obtener los datos: ", err);
+      res.status(500).json({ error: "Error al obtener los datos" });
+    } else {
+      res.json(results);
+    }
+  });
+});
