@@ -34,10 +34,19 @@ select {
   max-width: 100%;
   padding: 8px 24px 8px 10px;
   border: none;
-  background-color: var(--rojo);
+  background-color: #cccccc;
     -webkit-appearance: none;
     -moz-appearance: none;
   appearance: none;
+}
+
+.pie-text-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.pie-text {
+  margin-left: 40px;
 }
 
   table {
@@ -45,6 +54,7 @@ select {
     margin-bottom: 20px;
     border-collapse: collapse;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    
   }
   
   th, td {
@@ -55,14 +65,10 @@ select {
   }
 
   thead {
+    background: linear-gradient(to right, var(--azulFuerte), var(--rojo)); /* Degradado de izquierda a derecha */
     color: var(--blanco);
-    background-image: linear-gradient(to bottom, var(--azulFuerte), var(--azul));
   }
   
-  .table-head-container {
-    background-image: linear-gradient(to bottom, var(--azulFuerte), var(--azul));
-  }
-
   .chart-container {
     display: flex;
     justify-content: center;

@@ -193,14 +193,20 @@ const DisasterStatsComponent = () => {
         <button onClick={handleFetchData}>Fetch Data</button>
       </div>
 
-      <div className="charts-container">
-        <div className="chart">
-          <canvas id="pieChart"></canvas>
+      <div className='pie-text-container'>
+        <div className='pie-text'>
+          <p>Aquí va el texto de la gráfica de pie</p>
         </div>
-        <div className="chart">
-          <canvas id="barChart"></canvas>
+        <div className="charts-container">
+          <div className="chart">
+            <canvas id="pieChart"></canvas>
+          </div>
         </div>
       </div>
+      <div className="chart">
+        <canvas id="barChart"></canvas>
+      </div>
+      
 
       <div className="table-container">
         <button onClick={handleToggleTable}>
@@ -208,7 +214,7 @@ const DisasterStatsComponent = () => {
         </button>
         {showTable && data.length > 0 && ( 
           <table className="data-table">
-            <thead className='table-head-container'>
+            <thead>
               <tr>
                 <th>Year</th>
                 <th>Country</th>

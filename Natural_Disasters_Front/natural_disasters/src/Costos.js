@@ -105,7 +105,8 @@ const CostosDano = () => {
 
   return (
     <div>
-      <div>
+      <div className='select-container'>
+      <div className='select-wrapper'>
         <label htmlFor="year">Selecciona un año:</label>
         <select id="year" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
           <option value="">Selecciona un año</option>
@@ -114,7 +115,7 @@ const CostosDano = () => {
           ))}
         </select>
       </div>
-      <div>
+      <div className='select-wrapper'>
         <label htmlFor="country">Selecciona un país:</label>
         <select id="country" value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)}>
           <option value="">Selecciona un país</option>
@@ -124,6 +125,8 @@ const CostosDano = () => {
         </select>
       </div>
       <button onClick={fetchData}>Enviar</button>
+      </div> 
+
       <canvas id="bubbleChart" ref={bubbleChartRef} width="600" height="400"></canvas>
       <button onClick={toggleTable}>{showTable ? 'Ocultar Tabla' : 'Mostrar Tabla'}</button>
       {showTable && (
