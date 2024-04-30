@@ -25,11 +25,12 @@ const DisasterStatsComponent = () => {
   }, []);
 
   useEffect(() => {
+    destroyCharts(); // Destruye los gráficos existentes antes de crear nuevos
     if (data.length > 0) {
       createCharts();
       setShowCharts(true);
     }
-  }, [data]);
+  }, [data, year, country]); // Añade year y country como dependencias
 
   const fetchData = () => {
     fetch(`http://localhost:3001/principal?year=${year}&country=${country}`)
@@ -43,8 +44,6 @@ const DisasterStatsComponent = () => {
   };
 
   const createCharts = () => {
-    destroyCharts();
-
     const disastersData = data.map(item => ({ label: item.Tipo, value: item.No_Disaster_Type }));
     const sortedDisastersData = disastersData.sort((a, b) => b.value - a.value);
     const uniqueDisastersCount = new Set(disastersData.map(item => item.label)).size;
@@ -70,6 +69,11 @@ const DisasterStatsComponent = () => {
     const pieChartLabels = pieChartData.map(item => item.label);
     const pieChartValues = pieChartData.map(item => item.value);
 
+    const pieChartTitle = year && country ? `Desastres naturales de ${year} en ${country}` : '';
+
+    if (pieChart) {
+      pieChart.destroy();
+    }
     const newPieChart = new Chart(document.getElementById('pieChart'), {
       type: 'pie',
       data: {
@@ -84,6 +88,10 @@ const DisasterStatsComponent = () => {
         plugins: {
           legend: {
             position: 'right',
+          },
+          title: {
+            display: true,
+            text: pieChartTitle
           }
         }
       }
@@ -94,6 +102,11 @@ const DisasterStatsComponent = () => {
     const barChartLabels = barChartData.map(item => item.label);
     const barChartValues = barChartData.map(item => item.value);
 
+    const barChartTitle = year && country ? `Desastres naturales de ${year} en ${country}` : '';
+
+    if (barChart) {
+      barChart.destroy();
+    }
     const newBarChart = new Chart(document.getElementById('barChart'), {
       type: 'bar',
       data: {
@@ -118,6 +131,12 @@ const DisasterStatsComponent = () => {
               display: true,
               text: 'Disaster Type'
             }
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: barChartTitle
           }
         }
       }
@@ -176,11 +195,9 @@ const DisasterStatsComponent = () => {
 
       <div className="charts-container">
         <div className="chart">
-          <h3>Pie Chart</h3>
           <canvas id="pieChart"></canvas>
         </div>
         <div className="chart">
-          <h3>Bar Chart</h3>
           <canvas id="barChart"></canvas>
         </div>
       </div>
