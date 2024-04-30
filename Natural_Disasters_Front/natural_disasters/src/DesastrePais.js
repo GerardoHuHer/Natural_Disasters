@@ -7,7 +7,7 @@ function DesastresPorPais() {
   const [paisSeleccionado, setPaisSeleccionado] = useState('');
   const [informacionQuery, setInformacionQuery] = useState([]);
   const [showTable, setShowTable] = useState(false); // Estado para mostrar/ocultar la tabla
-  const [pieChartExists, setPieChartExists] = useState(false); // Estado para verificar si el gráfico de pastel existe
+  const [barChartExists, setBarChartExists] = useState(false); // Estado para verificar si el gráfico de barras existe
 
   useEffect(() => {
     fetch('http://localhost:3001/paises')
@@ -35,66 +35,64 @@ function DesastresPorPais() {
         .then(response => response.json())
         .then(data => {
           setInformacionQuery(data);
-          if (!pieChartExists && document.getElementById('pieChart1')) {
-            updatePieChart(data); // Si el gráfico de pastel no existe y el canvas está disponible, lo crea
-            setPieChartExists(true); // Actualiza el estado para indicar que el gráfico de pastel existe
+          if (!barChartExists && document.getElementById('barChart2')) {
+            updateBarChart(data); // Si el gráfico de barras no existe y el canvas está disponible, lo crea
+            setBarChartExists(true); // Actualiza el estado para indicar que el gráfico de barras existe
           }
         })
         .catch(error => {
           console.error('Error al obtener la información del query:', error);
         });
     }
-  }, [paisSeleccionado, pieChartExists]);
+  }, [paisSeleccionado, barChartExists]);
 
   const handlePaisSeleccionadoChange = (event) => {
     setPaisSeleccionado(event.target.value);
-    setPieChartExists(false); // Cuando cambia el país, el gráfico de pastel se reinicia
+    setBarChartExists(false); // Cuando cambia el país, el gráfico de barras se reinicia
   };
 
   const handleToggleTable = () => {
     setShowTable(!showTable);
   };
 
-  const updatePieChart = (data) => {
+  const updateBarChart = (data) => {
     const labels = data.map(item => item.type);
     const values = data.map(item => item.cantidad_desastres);
+    const colors = generateRandomColors(data.length);
 
-    const ctx = document.getElementById('pieChart1');
+    const ctx = document.getElementById('barChart2');
     if (ctx) {
       // Si el canvas ya existe, destruye el gráfico anterior
       Chart.getChart(ctx)?.destroy();
     }
 
     new Chart(ctx, {
-      type: 'pie',
+      type: 'bar',
       data: {
         labels: labels,
         datasets: [{
           label: 'Cantidad de desastres por tipo',
           data: values,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.8)',
-            'rgba(54, 162, 235, 0.8)',
-            'rgba(255, 206, 86, 0.8)',
-            'rgba(75, 192, 192, 0.8)',
-            'rgba(153, 102, 255, 0.8)',
-            'rgba(255, 159, 64, 0.8)'
-          ],
+          backgroundColor: colors,
           borderWidth: 1
         }]
       },
       options: {
         plugins: {
           legend: {
-            position: 'bottom'
-          },
-          title: {
-            display: true,
-            text: 'Gráfico de Pastel: Cantidad de desastres por tipo'
+            display: false
           }
         }
       }
     });
+  };
+
+  const generateRandomColors = (count) => {
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+      colors.push(`rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.8)`);
+    }
+    return colors;
   };
 
   return (
@@ -118,14 +116,14 @@ function DesastresPorPais() {
           <h2>Información del query para {paisSeleccionado}</h2>
           <table>
             <thead>
-              <tr>                
+              <tr>
                 <th>Tipo de desastre</th>
                 <th>Cantidad de desastres</th>
               </tr>
             </thead>
             <tbody>
               {informacionQuery.map((item, index) => (
-                <tr key={index}>                
+                <tr key={index}>
                   <td>{item.type}</td>
                   <td>{item.cantidad_desastres}</td>
                 </tr>
@@ -136,7 +134,7 @@ function DesastresPorPais() {
       )}
 
       <div>
-        <canvas id="pieChart1"></canvas>
+        <canvas id="barChart2"></canvas>
       </div>
     </div>
   );
