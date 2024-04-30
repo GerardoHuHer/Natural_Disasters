@@ -99,7 +99,7 @@ function DesastresPorPais() {
 
   return (
     <div>
-      <div>
+      <div className='select-container'>
         <label htmlFor="pais">Selecciona un país:</label>
         <select id="pais" value={paisSeleccionado} onChange={handlePaisSeleccionadoChange}>
           <option value="">Selecciona un país</option>

@@ -156,7 +156,7 @@ const DisasterStatsComponent = () => {
         <div className="select-wrapper">
           <label htmlFor="year">Select Year:</label>
           <select id="year" value={year} onChange={(e) => setYear(e.target.value)}>
-            <option value="">Select Year</option>
+            <option value="">Select Yearre</option>
             {years.map(year => (
               <option key={year} value={year}>{year}</option>
             ))}
@@ -191,7 +191,7 @@ const DisasterStatsComponent = () => {
         </button>
         {showTable && data.length > 0 && ( 
           <table className="data-table">
-            <thead>
+            <thead className='table-head-container'>
               <tr>
                 <th>Year</th>
                 <th>Country</th>
@@ -201,7 +201,7 @@ const DisasterStatsComponent = () => {
                 <th>People Dead</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className='tbody'>
               {data.map((item, index) => (
                 <tr key={index}>
                   <td>{item.Anio}</td>
