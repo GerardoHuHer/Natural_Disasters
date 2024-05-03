@@ -172,23 +172,25 @@ const DisasterStatsComponent = () => {
   return (
     <div className="container">
       <h1 className="title">NATURAL DISASTERS</h1>
-      <div className='paragraphs-container'>
-        <div className='twoParagraphs-container'>
-          <p className='texto'>The historical records of the countries of the world, hold a curious ambiguity regarding the number 
-            of natural disasters that occurred. While some events are well-documented, others remain obscured by 
-            the passage of time, leaving a lingering uncertainty.
-          </p>
-          <p className='texto'>
-            This data serves as a crucial tool for decision-making 
-            in preparing for future disasters, prompting further exploration to ascertain the complete picture of such 
-            occurrences.
-          </p>
-        </div>
-        <div className='thirdParagrah-container'>
-          <p className='texto'>
-            Select the year and the country to find out the number of natural disasters that occurred in that 
-            country and year
-          </p>
+      <div className='color-container'>
+        <div className='paragraphs-container'>
+          <div className='twoParagraphs-container'>
+            <p className='texto'>The historical records of the countries of the world, hold a curious ambiguity regarding the number 
+              of natural disasters that occurred. While some events are well-documented, others remain obscured by 
+              the passage of time, leaving a lingering uncertainty.
+            </p>
+            <p className='texto'>
+              This data serves as a crucial tool for decision-making 
+              in preparing for future disasters, prompting further exploration to ascertain the complete picture of such 
+              occurrences.
+            </p>
+          </div>
+          <div className='thirdParagrah-container'>
+            <p className='texto'>
+              Select the year and the country to find out the number of natural disasters that occurred in that 
+              country and year
+            </p>
+          </div>
         </div>
       </div>
       <div className="select-container">

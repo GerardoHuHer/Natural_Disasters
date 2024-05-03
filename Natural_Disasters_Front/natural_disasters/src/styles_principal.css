@@ -1,5 +1,4 @@
 :root {
-  --azulFuerte: #2F3A56;
   --azul: #406D96;
   --blanco: #FFFFFF;
   --azul2: #6cabd7;
@@ -7,6 +6,13 @@
   --azulClaro2: #D8E8E8;
   --rojo: #E2474B;
   --fondoPrincipal: #e8e8e8;
+  --turquesaFuerte: #286b5f; 
+  --primario: #3FAD98;
+  --secundario: #69CCBB;
+  --terciario: #a7d7cf;
+  --rojoPrimario: #fb3c04;
+  --rojoSecundario: #FF9646;
+  --azulFuerte: #3C55D1;
 }
 
 body {
@@ -19,16 +25,22 @@ h2 {
 }
 
 .texto {
+  background-color: #ffffffa9;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
   padding: 50px;
   margin-right: 10px;
+  border-radius: 5px;
+}
+
+.color-container {
+  background: linear-gradient(to right, var(--primario), var(--rojoSecundario));
 }
 
 .paragraphs-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin: 60px 130px 10px 130px;
+  margin: 80px 130px 10px 130px;
 }
 
 .twoParagraphs-container {
@@ -38,7 +50,7 @@ h2 {
 
 .thirdParagrah-container {
   flex: 0 0 100%;
-  margin-top: 20px;
+  margin: 40px 0;
 }
 
 .container {
@@ -47,6 +59,11 @@ h2 {
     align-items: center;
     margin-bottom: 50px;
   }
+
+.label-country, 
+.label-year {
+  font-weight: bold;
+}
   
 .select-container {
   display: flex;
@@ -72,7 +89,7 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
   appearance: none;
-  color: var(--azulFuerte);
+  color: var(--turquesaFuerte);
 }
 
 select:hover {
@@ -81,6 +98,9 @@ select:hover {
 
 .graph-text-container {
   margin-bottom: 90px;
+  padding: 50px;
+  background-color: var(--blanco);
+  border-radius: 30px;
 }
 
 .pie-text-container {
@@ -122,12 +142,20 @@ select:hover {
     padding: 8px;
     border: none;
     text-align: left;
-    background-color: rgba(255,255,255,0.2);
   }
 
   thead {
-    background: linear-gradient(to right, var(--azul), var(--azul2)); /* Degradado de izquierda a derecha */
+    background: linear-gradient(to bottom, var(--azulFuerte), var(--azul)); /* Degradado de izquierda a derecha */
     color: var(--blanco);
+  }
+
+  tbody {
+    background-color: #ffffffc1;
+  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
   }
   
   .chart-container {
@@ -149,8 +177,8 @@ select:hover {
   }
 
   button {
-    background-color: var(--azul);
-    color: var(--azulClaro2);
+    background-color: var(--azulFuerte);
+    color: var(--blanco);
     padding: 10px 25px;
     text-decoration: none;
     font-weight: bold;
@@ -175,6 +203,13 @@ select:hover {
   height: 400px;
   margin: 40px auto;
 }
+
+#barChart2 {
+  padding: 50px;
+  background-color: var(--fondoPrincipal);
+  border-radius: 20px;
+  margin-bottom: 40px;
+}
   
 
 /* --------- Costos ---------- */
@@ -182,4 +217,10 @@ select:hover {
   width: 800px;
   height: 600px;
   margin: 40px auto;
+}
+
+#bubbleChart {
+  padding: 50px;
+  background-color: var(--blanco);
+  border-radius: 20px;
 }

@@ -96,52 +96,54 @@ function DesastresPorPais() {
   };
 
   return (
-    <div>
-      <div className='paragraphs-container'>
-        <p className='texto'>
-          Select the country in order to see the number of each natural disaster occured in that country since 1950
-        </p>
-      </div>
-      <div className='select-container'>
-        <label htmlFor="pais">Selecciona un país:</label>
-        <select id="pais" value={paisSeleccionado} onChange={handlePaisSeleccionadoChange}>
-          <option value="">Selecciona un país</option>
-          {paises
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map(pais => (
-            <option key={pais.name} value={pais.name}>{pais.name}</option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <button onClick={handleToggleTable}>{showTable ? 'Ocultar Tabla' : 'Mostrar Tabla'}</button>
-      </div>
-
-      {showTable && (
-        <div>
-          <h2>Información del query para {paisSeleccionado}</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Tipo de desastre</th>
-                <th>Cantidad de desastres</th>
-              </tr>
-            </thead>
-            <tbody>
-              {informacionQuery.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.type}</td>
-                  <td>{item.cantidad_desastres}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className='main-container'>
+      <div className='color-container'>
+        <div className='paragraphs-container'>
+          <p className='texto'>
+            Select the country in order to see the number of each natural disaster occured in that country since 1950
+          </p>
         </div>
-      )}
+        <div className='select-container'>
+          <label htmlFor="pais">Selecciona un país:</label>
+          <select id="pais" value={paisSeleccionado} onChange={handlePaisSeleccionadoChange}>
+            <option value="">Selecciona un país</option>
+            {paises
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(pais => (
+              <option key={pais.name} value={pais.name}>{pais.name}</option>
+            ))}
+          </select>
+        </div>
 
-      <div id='barChart2-container'>
-        <canvas id="barChart2"></canvas>
+        <div>
+          <button onClick={handleToggleTable}>{showTable ? 'Ocultar Tabla' : 'Mostrar Tabla'}</button>
+        </div>
+
+        {showTable && (
+          <div>
+            <h2>Información del query para {paisSeleccionado}</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Tipo de desastre</th>
+                  <th>Cantidad de desastres</th>
+                </tr>
+              </thead>
+              <tbody>
+                {informacionQuery.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.type}</td>
+                    <td>{item.cantidad_desastres}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <div id='barChart2-container'>
+          <canvas id="barChart2"></canvas>
+        </div>
       </div>
     </div>
   );
