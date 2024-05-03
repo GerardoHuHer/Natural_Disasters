@@ -97,11 +97,18 @@ function DesastresPorPais() {
 
   return (
     <div>
+      <div className='paragraphs-container'>
+        <p className='texto'>
+          Select the country in order to see the number of each natural disaster occured in that country since 1950
+        </p>
+      </div>
       <div className='select-container'>
         <label htmlFor="pais">Selecciona un país:</label>
         <select id="pais" value={paisSeleccionado} onChange={handlePaisSeleccionadoChange}>
           <option value="">Selecciona un país</option>
-          {paises.map(pais => (
+          {paises
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map(pais => (
             <option key={pais.name} value={pais.name}>{pais.name}</option>
           ))}
         </select>
@@ -133,7 +140,7 @@ function DesastresPorPais() {
         </div>
       )}
 
-      <div>
+      <div id='barChart2-container'>
         <canvas id="barChart2"></canvas>
       </div>
     </div>

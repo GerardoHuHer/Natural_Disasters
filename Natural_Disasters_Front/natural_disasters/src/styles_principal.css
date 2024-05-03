@@ -2,6 +2,7 @@
   --azulFuerte: #2F3A56;
   --azul: #406D96;
   --blanco: #FFFFFF;
+  --azul2: #6cabd7;
   --azulClaro: #A8D0DA;
   --azulClaro2: #D8E8E8;
   --rojo: #E2474B;
@@ -10,18 +11,48 @@
 
 body {
   background-color: var(--fondoPrincipal);
+  font-family: Schibsted Grotesk, Arial;
+}
+
+h2 {
+  margin: 50px;
+}
+
+.texto {
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  padding: 50px;
+  margin-right: 10px;
+}
+
+.paragraphs-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 60px 130px 10px 130px;
+}
+
+.twoParagraphs-container {
+  flex: 1;
+  display: flex;
+}
+
+.thirdParagrah-container {
+  flex: 0 0 100%;
+  margin-top: 20px;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 50px;
   }
   
 .select-container {
   display: flex;
   justify-content: center;
   margin: 40px;
+  margin-bottom: 80px;
 }
 
 .select-wrapper {
@@ -33,11 +64,23 @@ select {
   font-weight: normal;
   max-width: 100%;
   padding: 8px 24px 8px 10px;
-  border: none;
-  background-color: #cccccc;
+  background-color: var(--fondoPrincipal);
+  border-color: #c3c3c3;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 1px;
     -webkit-appearance: none;
     -moz-appearance: none;
   appearance: none;
+  color: var(--azulFuerte);
+}
+
+select:hover {
+  border-color: var(--azul2);
+}
+
+.graph-text-container {
+  margin-bottom: 90px;
 }
 
 .pie-text-container {
@@ -46,11 +89,29 @@ select {
 }
 
 .pie-text {
-  margin-left: 40px;
+  padding-left: 40px;
+  flex: 1
+}
+
+.bar-text-container {
+  display: flex;
+  height: 200px;
+}
+
+.bar-text {
+  padding-right: 40px;
+  flex: 1
+}
+
+.barGraph {
+  width: 40%;
+  height: 300px;
 }
 
   table {
-    width: 100%;
+    width: 80%;
+    margin: auto;
+    margin-top: 60px;
     margin-bottom: 20px;
     border-collapse: collapse;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -65,7 +126,7 @@ select {
   }
 
   thead {
-    background: linear-gradient(to right, var(--azulFuerte), var(--rojo)); /* Degradado de izquierda a derecha */
+    background: linear-gradient(to right, var(--azul), var(--azul2)); /* Degradado de izquierda a derecha */
     color: var(--blanco);
   }
   
@@ -80,6 +141,11 @@ select {
   
   .chart h3 {
     margin-bottom: 5px;
+  }
+
+  .barGraph-container {
+    height: 300px;
+    width: 70%;
   }
 
   button {
@@ -97,4 +163,23 @@ select {
     color: var(--azulFuerte);
   }
 
+/* --------- Muertes ---------- */
+#barChart {
+  width: 70%;
+}
+
+/* --------- Desastre por país ---------- */
+
+#barChart2-container {
+  width: 70%;
+  height: 400px;
+  margin: 40px auto;
+}
   
+
+/* --------- Costos ---------- */
+#bubbleChart-container {
+  width: 800px;
+  height: 600px;
+  margin: 40px auto;
+}

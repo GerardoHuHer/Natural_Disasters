@@ -118,6 +118,8 @@ const DisasterStatsComponent = () => {
         }]
       },
       options: {
+        maintainAspectRatio: false,
+        responsive: true,
         scales: {
           y: {
             beginAtZero: true,
@@ -169,23 +171,43 @@ const DisasterStatsComponent = () => {
 
   return (
     <div className="container">
-      <h1 className="title">Desastres Naturales</h1>
-      <div className='instrucciones'>Seleccione el año y el país: </div>
+      <h1 className="title">NATURAL DISASTERS</h1>
+      <div className='paragraphs-container'>
+        <div className='twoParagraphs-container'>
+          <p className='texto'>The historical records of the countries of the world, hold a curious ambiguity regarding the number 
+            of natural disasters that occurred. While some events are well-documented, others remain obscured by 
+            the passage of time, leaving a lingering uncertainty.
+          </p>
+          <p className='texto'>
+            This data serves as a crucial tool for decision-making 
+            in preparing for future disasters, prompting further exploration to ascertain the complete picture of such 
+            occurrences.
+          </p>
+        </div>
+        <div className='thirdParagrah-container'>
+          <p className='texto'>
+            Select the year and the country to find out the number of natural disasters that occurred in that 
+            country and year
+          </p>
+        </div>
+      </div>
       <div className="select-container">
         <div className="select-wrapper">
-          <label htmlFor="year">Select Year:</label>
+          <label htmlFor="year">Select the year: </label>
           <select id="year" value={year} onChange={(e) => setYear(e.target.value)}>
-            <option value="">Select Yearre</option>
+            <option value="">Year</option>
             {years.map(year => (
               <option key={year} value={year}>{year}</option>
             ))}
           </select>
         </div>
         <div className="select-wrapper">
-          <label htmlFor="country">Select Country:</label>
+          <label htmlFor="country">Select the country: </label>
           <select id="country" value={country} onChange={(e) => setCountry(e.target.value)}>
-            <option value="">Select Country</option>
-            {countries.map(country => (
+            <option value="">Country</option>
+            {countries
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(country => (
               <option key={country.name} value={country.name}>{country.name}</option>
             ))}
           </select>
@@ -193,21 +215,30 @@ const DisasterStatsComponent = () => {
         <button onClick={handleFetchData}>Fetch Data</button>
       </div>
 
-      <div className='pie-text-container'>
-        <div className='pie-text'>
-          <p>Aquí va el texto de la gráfica de pie</p>
-        </div>
-        <div className="charts-container">
-          <div className="chart">
-            <canvas id="pieChart"></canvas>
+      <div className='graph-text-container'>
+        <div className='pie-text-container'>
+          <div className='pie-text'>
+            <p>Aquí va el texto de la gráfica de pie</p>
+          </div>
+          <div className="charts-container">
+            <div className="chart">
+              <canvas id="pieChart"></canvas>
+            </div>
           </div>
         </div>
       </div>
-      <div className="chart">
-        <canvas id="barChart"></canvas>
+      
+      <div className='graph-text-container'>
+        <div className='bar-text-container'>
+          <div className='bar-text'>
+            <p>Ahora este es el texto de la gráfica de barras</p>
+          </div>
+          <div className='barGraph'>
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
       </div>
       
-
       <div className="table-container">
         <button onClick={handleToggleTable}>
           {showTable ? 'Hide Table' : 'Show Table'}

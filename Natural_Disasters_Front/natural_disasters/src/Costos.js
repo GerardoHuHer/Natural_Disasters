@@ -64,13 +64,13 @@ const CostosDano = () => {
             position: 'bottom',
             title: {
               display: true,
-              text: 'Costo de Reconstrucción',
+              text: 'Frequency',
             },
           },
           y: {
             title: {
               display: true,
-              text: 'Daño Total',
+              text: 'Economic damages',
             },
           },
         },
@@ -82,11 +82,11 @@ const CostosDano = () => {
     if (!bubbleChartInstance.current) return;
     
     bubbleChartInstance.current.data.datasets = [{
-      label: 'Costo de Reconstrucción vs Daño Total',
+      label: 'Reconstruction costs',
       data: chartData.map(item => ({
-        x: item.Reconstruction_Cost,
+        x: item.No_Disaster_Type,
         y: item.Total_Damage,
-        r: Math.sqrt(item.No_Disaster_Type) * 2, // Escalar el radio para mejorar la visualización
+        r: item.Reconstruction_Cost + 10, // Escalar el radio para mejorar la visualización
       })),
       backgroundColor: 'rgba(255, 99, 132, 0.6)',
       borderColor: 'rgba(255, 99, 132, 1)',
@@ -105,29 +105,45 @@ const CostosDano = () => {
 
   return (
     <div>
+      <div className='paragraphs-container'>
+        <p className='texto'>
+          Data to display:
+          <ul>
+            <li>Frequency of the disaster</li>
+            <li>Total of economic damages</li>
+            <li>Reconstruction costs</li>
+          </ul>
+        </p>
+        
+      </div>
       <div className='select-container'>
       <div className='select-wrapper'>
-        <label htmlFor="year">Selecciona un año:</label>
+        <label htmlFor="year">Select the year:  </label>
         <select id="year" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
-          <option value="">Selecciona un año</option>
+          <option value="">Year</option>
           {Array.from({ length: 2022 - 2000 + 1 }, (_, index) => 2000 + index).map(year => (
             <option key={year} value={year}>{year}</option>
           ))}
         </select>
       </div>
       <div className='select-wrapper'>
-        <label htmlFor="country">Selecciona un país:</label>
+        <label htmlFor="country">Select a country:  </label>
         <select id="country" value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)}>
-          <option value="">Selecciona un país</option>
-          {countries.map(country => (
+          <option value="">Country</option>
+          {countries
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map(country => (
             <option key={country.name} value={country.name}>{country.name}</option>
           ))}
         </select>
       </div>
-      <button onClick={fetchData}>Enviar</button>
+        <button onClick={fetchData}>Enviar</button>
       </div> 
 
-      <canvas id="bubbleChart" ref={bubbleChartRef} width="600" height="400"></canvas>
+      <div id='bubbleChart-container'>
+        <canvas id="bubbleChart" ref={bubbleChartRef} width="600" height="400"></canvas>
+      </div>
+      
       <button onClick={toggleTable}>{showTable ? 'Ocultar Tabla' : 'Mostrar Tabla'}</button>
       {showTable && (
         <table>
