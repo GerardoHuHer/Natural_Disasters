@@ -58,7 +58,8 @@ function DesastresPorPais() {
   const updateBarChart = (data) => {
     const labels = data.map(item => item.type);
     const values = data.map(item => item.cantidad_desastres);
-    const colors = generateRandomColors(data.length);
+    //const colors = generateRandomColors(data.length);
+    const colors = ['#286b5f']
 
     const ctx = document.getElementById('barChart2');
     if (ctx) {
@@ -71,7 +72,7 @@ function DesastresPorPais() {
       data: {
         labels: labels,
         datasets: [{
-          label: 'Cantidad de desastres por tipo',
+          label: 'The number of disasters by type',
           data: values,
           backgroundColor: colors,
           borderWidth: 1
@@ -81,6 +82,20 @@ function DesastresPorPais() {
         plugins: {
           legend: {
             display: false
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Disaster type'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Total number of disasters'
+            }
           }
         }
       }
@@ -104,9 +119,9 @@ function DesastresPorPais() {
           </p>
         </div>
         <div className='select-container'>
-          <label htmlFor="pais">Selecciona un país:</label>
+          <label htmlFor="pais">Select a country: </label>
           <select id="pais" value={paisSeleccionado} onChange={handlePaisSeleccionadoChange}>
-            <option value="">Selecciona un país</option>
+            <option value="">Country</option>
             {paises
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(pais => (
@@ -116,17 +131,17 @@ function DesastresPorPais() {
         </div>
 
         <div>
-          <button onClick={handleToggleTable}>{showTable ? 'Ocultar Tabla' : 'Mostrar Tabla'}</button>
+          <button onClick={handleToggleTable}>{showTable ? 'Hide table' : 'Show table'}</button>
         </div>
 
         {showTable && (
           <div>
-            <h2>Información del query para {paisSeleccionado}</h2>
+            <h3>Number of natural disasters occured in {paisSeleccionado}</h3>
             <table>
               <thead>
                 <tr>
-                  <th>Tipo de desastre</th>
-                  <th>Cantidad de desastres</th>
+                  <th>Disaster type</th>
+                  <th>Total number of disasters</th>
                 </tr>
               </thead>
               <tbody>

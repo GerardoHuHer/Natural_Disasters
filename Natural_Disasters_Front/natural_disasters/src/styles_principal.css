@@ -13,6 +13,7 @@
   --rojoPrimario: #fb3c04;
   --rojoSecundario: #FF9646;
   --azulFuerte: #3C55D1;
+  --azulBoton: #4C5DB2;
 }
 
 body {
@@ -24,12 +25,18 @@ h2 {
   margin: 50px;
 }
 
+p {
+  font-size: small;
+}
+
 .texto {
   background-color: #ffffffa9;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
   padding: 50px;
   margin-right: 10px;
   border-radius: 5px;
+  font-size: medium;
+  text-align: left;
 }
 
 .color-container {
@@ -60,9 +67,8 @@ h2 {
     margin-bottom: 50px;
   }
 
-.label-country, 
-.label-year {
-  font-weight: bold;
+label{
+  font-weight: 600;
 }
   
 .select-container {
@@ -70,6 +76,7 @@ h2 {
   justify-content: center;
   margin: 40px;
   margin-bottom: 80px;
+  align-items: center;
 }
 
 .select-wrapper {
@@ -78,18 +85,19 @@ h2 {
 
 select {
   font-size: 1rem;
-  font-weight: normal;
+  font-weight: 500;
   max-width: 100%;
   padding: 8px 24px 8px 10px;
   background-color: var(--fondoPrincipal);
   border-color: #c3c3c3;
   border-width: 3px;
   border-style: solid;
-  border-radius: 1px;
+  border-radius: 7px;
     -webkit-appearance: none;
     -moz-appearance: none;
   appearance: none;
   color: var(--turquesaFuerte);
+  font-family: Schibsted Grotesk;
 }
 
 select:hover {
@@ -106,25 +114,31 @@ select:hover {
 .pie-text-container {
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
 }
 
 .pie-text {
+  max-width: 200px;
   padding-left: 40px;
-  flex: 1
+  flex: 1;
+  text-align: right;
 }
 
 .bar-text-container {
   display: flex;
   height: 200px;
+  align-items: center;
 }
 
 .bar-text {
   padding-right: 40px;
-  flex: 1
+  flex: 1;
+  max-width: 250px;
+  text-align: left;
 }
 
 .barGraph {
-  width: 40%;
+  width: 50%;
   height: 300px;
 }
 
@@ -177,7 +191,7 @@ select:hover {
   }
 
   button {
-    background-color: var(--azulFuerte);
+    background-color: var(--azulBoton);
     color: var(--blanco);
     padding: 10px 25px;
     text-decoration: none;

@@ -88,8 +88,8 @@ const CostosDano = () => {
         y: item.Total_Damage,
         r: item.Reconstruction_Cost + 10, // Escalar el radio para mejorar la visualización
       })),
-      backgroundColor: 'rgba(255, 99, 132, 0.6)',
-      borderColor: 'rgba(255, 99, 132, 1)',
+      backgroundColor: '#3fad9993',
+      borderColor: '#286b5f',
     }];
 
     bubbleChartInstance.current.update();
@@ -137,14 +137,14 @@ const CostosDano = () => {
           ))}
         </select>
       </div>
-        <button onClick={fetchData}>Enviar</button>
+        <button onClick={fetchData}>Fetch data</button>
       </div> 
 
       <div id='bubbleChart-container'>
         <canvas id="bubbleChart" ref={bubbleChartRef} width="600" height="400"></canvas>
       </div>
       
-      <button onClick={toggleTable}>{showTable ? 'Ocultar Tabla' : 'Mostrar Tabla'}</button>
+      <button onClick={toggleTable}>{showTable ? 'Hide table' : 'Show table'}</button>
       {showTable && (
         <table>
           <thead>

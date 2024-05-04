@@ -69,7 +69,7 @@ const DisasterStatsComponent = () => {
     const pieChartLabels = pieChartData.map(item => item.label);
     const pieChartValues = pieChartData.map(item => item.value);
 
-    const pieChartTitle = year && country ? `Desastres naturales de ${year} en ${country}` : '';
+    const pieChartTitle = year && country ? `Natural disasters of ${year} in ${country}` : '';
 
     if (pieChart) {
       pieChart.destroy();
@@ -102,7 +102,7 @@ const DisasterStatsComponent = () => {
     const barChartLabels = barChartData.map(item => item.label);
     const barChartValues = barChartData.map(item => item.value);
 
-    const barChartTitle = year && country ? `Desastres naturales de ${year} en ${country}` : '';
+    const barChartTitle = year && country ? `Number of deaths in ${year} in ${country}` : '';
 
     if (barChart) {
       barChart.destroy();
@@ -114,7 +114,7 @@ const DisasterStatsComponent = () => {
         datasets: [{
           label: 'Number of Deaths',
           data: barChartValues,
-          backgroundColor: '#36A2EB',
+          backgroundColor: '#3C55D1',
         }]
       },
       options: {
@@ -220,7 +220,7 @@ const DisasterStatsComponent = () => {
       <div className='graph-text-container'>
         <div className='pie-text-container'>
           <div className='pie-text'>
-            <p>Aquí va el texto de la gráfica de pie</p>
+            <p>This pie chart shows the total number of natural disasters that have occured in {country} in the year {year}</p>
           </div>
           <div className="charts-container">
             <div className="chart">
@@ -233,7 +233,7 @@ const DisasterStatsComponent = () => {
       <div className='graph-text-container'>
         <div className='bar-text-container'>
           <div className='bar-text'>
-            <p>Ahora este es el texto de la gráfica de barras</p>
+            <p>This bar chart shows the number of deaths in the disasters that occurred in {country} in the year {year}.</p>
           </div>
           <div className='barGraph'>
             <canvas id="barChart"></canvas>
